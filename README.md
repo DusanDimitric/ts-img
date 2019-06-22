@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/DusanDimitric/ts-img.svg?branch=master)](https://travis-ci.org/DusanDimitric/ts-img)
+
 # A simple image listing node.js app
 
 ## How to run the app?
