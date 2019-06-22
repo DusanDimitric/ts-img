@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '12.0.0'
+env:
+  PORT=3000
+script:
+  npm test
