@@ -1,64 +1,64 @@
-(async function() {
+(function() {
   'use strict'
 
-  class ImageThumbnailComponent {
-    static parentComponent = document.getElementById('image-list')
-      
-    constructor(imageData) {
-      this.imageData = imageData
-      this.element = this.render()
-    }
-
-    render() {
-      const imageLink = document.createElement('a')
-      imageLink.setAttribute('href', this.imageData.links.html)
-
-      const imageFigure = document.createElement('figure')
-      const imageFigcaption = document.createElement('figcaption')
-
-      imageFigcaption.textContent = this.imageData.alt_description
-
-      const imageElement = document.createElement('img')
-      imageElement.setAttribute('src', this.imageData.urls.thumb)
-      imageElement.setAttribute('alt', this.imageData.alt_description)
-
-      imageFigure.appendChild(imageElement)
-      imageFigure.appendChild(imageFigcaption)
-      imageLink.appendChild(imageFigure)
-      ImageThumbnailComponent.parentComponent.appendChild(imageLink)
-      return imageLink
-    }
-
-    show() {
-      this.element.style.display = 'block'
-    }
-    hide() {
-      this.element.style.display = 'none'
-    }
+  function ImageThumbnailComponent(imageData) {
+    this.imageData = imageData
+    this.element = this.render()
   }
 
-  const imageComponents = await fetch('/images')
-    .then(images => images.json())
-    .then(images => images.map(img => new ImageThumbnailComponent(img)))
+  ImageThumbnailComponent.parentComponent = document.getElementById('image-list')
 
-  const searchBar = document.getElementById('search-bar')
+  ImageThumbnailComponent.prototype.render = function() {
+    var imageLink = document.createElement('a')
+    imageLink.setAttribute('href', this.imageData.links.html)
 
-  let debounceTimeout
-  searchBar.addEventListener('input', e => {
+    var imageFigure = document.createElement('figure')
+    var imageFigcaption = document.createElement('figcaption')
+
+    imageFigcaption.textContent = this.imageData.alt_description
+
+    var imageElement = document.createElement('img')
+    imageElement.setAttribute('src', this.imageData.urls.thumb)
+    imageElement.setAttribute('alt', this.imageData.alt_description)
+
+    imageFigure.appendChild(imageElement)
+    imageFigure.appendChild(imageFigcaption)
+    imageLink.appendChild(imageFigure)
+    ImageThumbnailComponent.parentComponent.appendChild(imageLink)
+    return imageLink
+  }
+  ImageThumbnailComponent.prototype.show = function() {
+    this.element.style.display = 'block'
+  }
+  ImageThumbnailComponent.prototype.hide = function() {
+    this.element.style.display = 'none'
+  }
+
+  var imageComponents
+  fetch('/images')
+    .then(function(images) { return images.json() })
+    .then(function(images) { 
+      imageComponents = images.map(function(img) { return new ImageThumbnailComponent(img) })
+    })
+
+  var searchBar = document.getElementById('search-bar')
+
+  var debounceTimeout
+  searchBar.addEventListener('input', function(e) {
     clearTimeout(debounceTimeout)
-    debounceTimeout = setTimeout(() => {
+    debounceTimeout = setTimeout(function() {
       filterImages(searchBar.value)
     }, 300)
   })
 
   function filterImages(searchQuery) {
-    console.log(searchBar.value)
-
     if (searchQuery === '') {
-      imageComponents.forEach(img => img.show())
+      imageComponents.forEach(function(img) {
+        img.show()
+      })
     }
     else {
-      imageComponents.forEach(img => {
+      imageComponents.forEach(function(img) {
         if (img.imageData.alt_description.includes(searchQuery)) {
           img.show()
         }
