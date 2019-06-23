@@ -127,6 +127,20 @@ a:hover {
 
 /******************************** IMAGE LIST **********************************/
 
+#search-bar {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+}
+
+#search-bar:active,
+#search-bar:focus
+{
+  outline: none;
+  border: 1px solid #666;
+}
+
 #image-list { 
   display: flex;
   flex-flow: row wrap;
