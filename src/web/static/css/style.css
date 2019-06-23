@@ -132,6 +132,7 @@ a:hover {
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
+  margin-left: -8px; /* Adjustment for the gutter */
 }
 
 #search-bar:active,
