@@ -1,12 +1,13 @@
-const server = require('express')()
+const path = require('path')
+
+const express = require('express')
+const server  = express()
 
 const { PORT } = require('../web.config')
 
 server.set('port', PORT)
 
-const HomeRouter = require('../routers/HomeRouter')
-
-server.use('/', HomeRouter)
+server.use(express.static(path.join(__dirname, '../', 'static')))
 
 function startServer() {
   server.listen(server.get('port'), () => {
